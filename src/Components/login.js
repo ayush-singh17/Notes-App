@@ -1,21 +1,27 @@
 import { InputGroup,Input,Box,FieldHelperText,FieldLabel,FieldRoot,FieldRequiredIndicator, Button,Center,VStack, FieldErrorText} from "@chakra-ui/react";
-import { useState } from "react";
 import { LuUser } from "react-icons/lu"
 import { MdOutlineEmail } from "react-icons/md";
 import { TbLockPassword } from "react-icons/tb";
-import { Link as ReactRouterLink } from 'react-router-dom';
+import { Toaster, createToaster} from "@ark-ui/react/toast";
+import { useNavigate } from "react-router-dom"
+
+const toaster = createToaster()
 
 function Login(){
 
-    const [success, setSuccess] = useState(false);
+    const navigate = useNavigate()
 
     const handleLogin = () => {
-        // Just simulating login success
-        setSuccess(true);
-
-        // Optionally hide message after 3 sec
-        setTimeout(() => setSuccess(false), 3000);
-    };
+    toaster.create({
+      title: "Login Successful 🎉",
+      description: "Welcome back!",
+      type: "success",
+      duration: 3000,
+    })
+    setTimeout(() => {
+      navigate("/")
+    }, 1000)
+  }
 
     return (
        <Box
@@ -72,15 +78,24 @@ function Login(){
                         <FieldErrorText>This field is required</FieldErrorText>
                     </FieldRoot>
                 </Box>
-                <Button onClick={handleLogin}
-                    as={ReactRouterLink}
-                    to="/"
-                >Login</Button>
-                {success && (
-                    <Box color="green.500" fontWeight="bold">
-                        ✅ Logged in successfully!
-                    </Box>
+                <Button onClick={handleLogin}>Login</Button>
+                <Toaster toaster={toaster}>
+                    {(toast) => (
+                    <div
+                        style={{
+                        padding: "12px",
+                        margin: "8px",
+                        borderRadius: "8px",
+                        background:
+                            toast.type === "success" ? "green" : "gray",
+                        color: "white",
+                        }}
+                    >
+                        <strong>{toast.title}</strong>
+                        <p>{toast.description}</p>
+                    </div>
                     )}
+                </Toaster>
                 </VStack>
             </Center>
        </Box>

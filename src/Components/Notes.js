@@ -10,14 +10,17 @@ import { CiSquareCheck } from "react-icons/ci";
 import { IoMdAdd } from "react-icons/io";
 import { BsTextarea } from "react-icons/bs";
 import { MdDeleteForever } from "react-icons/md";
-import { Link as ReactRouterLink } from 'react-router-dom';
+import { Link as ReactRouterLink, useNavigate } from 'react-router-dom';
 import Color from "./color";
 import Font from "./Font";
 import Size from "./Size";
 import { useState} from "react";
 
 
-function Notes({updateViewNotes,addNotes,note,handleBack}){
+
+function Notes({updateViewNotes,addNotes,note,handleBack,updateNotes}){
+
+    const navigate = useNavigate()
 
     const [align,setAlign]=useState(note ? note.align : 'left');
     const [textColor, setTextColor] = useState(note ? note.textColor : '#000000');
@@ -39,9 +42,14 @@ function Notes({updateViewNotes,addNotes,note,handleBack}){
         }
     };
 
+    const navi=()=>{
+        handleBack();
+        navigate('/');
+    }
+
     const handleSave = () => {
         const newNote = {
-            id: Date.now(),
+            id: note? note.id:Date.now(),
             heading: heading,
             text: text,
             align: align,
@@ -51,8 +59,15 @@ function Notes({updateViewNotes,addNotes,note,handleBack}){
             checkedItems: checkedItems,
             check: check,
             bullet: bullet,
+            isPinned:note?true:false,
         };
-        addNotes(newNote);
+
+        if(note){
+            updateNotes(newNote);
+        }else{
+            addNotes(newNote);
+        }
+        handleBack();
     };
 
     const renderNoteContent =()=>{
@@ -193,10 +208,11 @@ function Notes({updateViewNotes,addNotes,note,handleBack}){
                 size="xl"
                 bg="gray.50"
                 color="black"
-                onClick={handleBack}
+                onClick={navi}
                 _hover={{
                 borderColor: "blackAlpha.500"
-                }}><IoMdArrowRoundBack /></IconButton>
+                }}
+                ><IoMdArrowRoundBack /></IconButton>
                 <Box p={4}
                     bg="gray.100"
                     borderRadius="10px"
@@ -254,10 +270,7 @@ function Notes({updateViewNotes,addNotes,note,handleBack}){
                 _hover={{
                     borderColor: "blackAlpha.500"
                 }}
-                onClick={()=>{
-                    handleSave();
-                    updateViewNotes();
-                }}
+                onClick={handleSave}
                 as={ReactRouterLink}
                 to="/"
                 ><IoIosSave /></IconButton>

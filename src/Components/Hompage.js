@@ -1,7 +1,10 @@
 import { Box, Heading } from "@chakra-ui/react";
 import NoteCard from "./NoteCard";
 
-export default function Homepage({notes,handleDelete,handleNoteClick}){
+export default function Homepage({notes,handleDelete,handleNoteClick,filteredNotes,search,togglePin}){
+
+    const sortedNotes = [...notes].sort((a, b) => (b.isPinned === true) - (a.isPinned === true));
+    const sortedFilteredNotes = [...filteredNotes].sort((a, b) => b.isPinned - a.isPinned);
 
     return (
         <Box>
@@ -10,12 +13,23 @@ export default function Homepage({notes,handleDelete,handleNoteClick}){
                 You have no saved notes.
                 </Heading>
             ) : (
-                notes.map(note => (
-                <Box key={note.id} mb={4}>
-                    <NoteCard key={note.id} note={note} handleDelete={handleDelete} handleNotClick={handleNoteClick} />
-                </Box>
-                ))
-            )}
+                    <>
+                        {search === '' ? (
+                            sortedNotes.map(note => (
+                                <Box key={note.id} mb={4}>
+                                <NoteCard key={note.id} note={note} handleDelete={handleDelete} handleNotClick={handleNoteClick} togglePin={togglePin} />
+                                </Box>
+                            ))
+                            ) : (
+                            sortedFilteredNotes.map(note => (
+                                <Box key={note.id} mb={4}>
+                                <NoteCard key={note.id} note={note} handleDelete={handleDelete} handleNotClick={handleNoteClick} />
+                                </Box>
+                            ))
+                        )}
+                    </>
+                )
+            }
         </Box>
     );
 }

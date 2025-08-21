@@ -7,6 +7,8 @@ import { useState } from 'react';
 
 function App() {
 
+  const [search,setSearch]=useState('');
+
   const [viewNotes,setViewNotes]= useState(false);
   function updateViewNotes(){
     setViewNotes(viewNotes=>!viewNotes);
@@ -17,7 +19,7 @@ function App() {
     content=null;
   }
   else{
-    content = <Header updateViewNotes={updateViewNotes}/>;
+    content = <Header updateViewNotes={updateViewNotes} search={search} setSearch={setSearch}/>;
   }
 
   return (
@@ -38,7 +40,7 @@ function App() {
             p={{base:"20px",xl:"30px"}}
           >
             {content}
-            <Main updateViewNotes={updateViewNotes}/>
+            <Main updateViewNotes={updateViewNotes} search={search}/>
           </GridItem>
        </Grid>
     </>

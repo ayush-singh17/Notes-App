@@ -1,4 +1,4 @@
-import { Box, Icon, Text, Input, Button } from "@chakra-ui/react";
+import { Box, Icon, Text, Button } from "@chakra-ui/react";
 import { FaNoteSticky } from "react-icons/fa6";
 import { Link as ReactRouterLink } from 'react-router-dom';
 import { FaHome } from "react-icons/fa";
@@ -21,9 +21,6 @@ function Nav({viewNotes,updateViewNotes}){
                     <Icon as={FaHome} boxSize="20px"/>
                     <Text  as={ReactRouterLink} to="/" onClick={handleClick}>Home</Text>
                 </Box>
-            </Box>
-            <Box alignItems="center" justifyContent="center" p="10px" paddingTop={{lg:"130px"}}>
-                <Input placeholder="Type to Search" size="xs" bg="gray.50"></Input>
             </Box>
         </>
     );
