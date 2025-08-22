@@ -29,13 +29,19 @@ A **frontend-only Notes application** built with **React**, **Chakra UI**, and *
 ## Project Structure
 ```
 src/
-├── App.jsx # Main layout with Grid and routing
-├── Header.jsx # Header component
-├── Nav.jsx # Navigation sidebar
-├── Main.jsx # Main notes component
-├── index.js # Entry point with ChakraProvider and ThemeProvider
-├── index.css # Global styles
-└── reportWebVitals.js
+├── App.js # The main file that holds all the app's logic and handles what you see on the screen.
+├── Header.js # The top part of the app with the search bar and the "new note" button.
+├── Nav.js # The menu on the side that helps you get around.
+├── main.js # This handles the different pages you can visit, like the home screen and the notes page.
+├── Homepage.js # This is the main screen where you see all your notes laid out.
+├── NoteCard.js # The little clickable box for each individual note.
+├── Components/ # This folder has all the other pieces that make the app work.
+│   ├── Notes.js # The actual page where you write and edit your notes.
+│   ├── login.js # The login screen.
+│   ├── Color.js # The color picker tool.
+│   ├── Font.js # The font selector tool.
+│   └── Size.js # The font size selector tool.
+└── index.js # The starting point for the entire app!
 ```
 ---
 
